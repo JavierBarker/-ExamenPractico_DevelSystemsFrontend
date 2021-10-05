@@ -17,8 +17,11 @@ export class HomePageComponent implements OnInit {
   showProfileModal: boolean = false;
   showCreatePoll: boolean = false;
   showLink: boolean = false;
+  showViewPoll: boolean = false;
+  showDeletePoll: boolean = false;
   public token: any = "";
   public getPollsUserVar: any;
+  public getPollIdVar: any;
   public link = "";
 
 
@@ -88,12 +91,60 @@ export class HomePageComponent implements OnInit {
 
         this.resetForms();
         this.showCreatePoll = false;
+        this.getPollsUser(); 
+      }
+    )
+  }
+
+  getPollById(id: string){
+    this.pollService.getPollId(id).subscribe(
+      response =>{
+        this.getPollIdVar = response;
+      }
+    )
+  }
+
+
+  deletePollId(id: string){
+    this.pollService.deletePollId(id, this.token).subscribe(
+      response=>{
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Encuesta Eliminada',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.showDeletePoll = false;
         this.getPollsUser();
+
+
+      },
+      error=>{
+        console.log(<any>error);
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'No se pudo Eliminar la Encuesta',
+          showConfirmButton: false,
+          timer: 1500
+        })
+
       }
     )
   }
 /////////////////////////////////////////////////////////////
   
+
+  copyLink(){
+    Swal.fire({
+      position: 'center',
+      title: 'Link Copiado',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
   resetForms(){
     this.firstForm.reset();
     this.fields.reset();

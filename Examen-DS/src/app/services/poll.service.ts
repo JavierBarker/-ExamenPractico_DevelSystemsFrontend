@@ -24,4 +24,14 @@ export class PollService {
     let headersToken = this.headersVar.set('Authorization', token);
     return this.http.post(`${this.url}/addPoll`, params, {headers: headersToken} );
   }
+
+  getPollId(id: string):Observable<any>{
+    return this.http.get(`${this.url}/getPollById/${id}`, {headers: this.headersVar});
+  }
+
+
+  deletePollId(id: string, token: any):Observable<any>{
+    let headersToken = this.headersVar.set('Authorization', token);
+    return this.http.delete(`${this.url}/deletePollById/${id}`, {headers: headersToken});
+  }
 }
