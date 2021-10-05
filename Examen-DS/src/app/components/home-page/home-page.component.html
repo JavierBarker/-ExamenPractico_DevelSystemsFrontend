@@ -77,5 +77,185 @@
 
     <div class="w-full text-center">
         <h1 class="text-3xl text-gray-800">Mis Encuestas</h1>
+        <button (click)="showCreatePoll = true" class="btn btn-wide mt-3">
+            Crear Encuesta
+        </button>
+        <div>
+            <section class=" text-black bg-white ">
+                <div class="max-w-6xl mx-auto px-5 py-5 ">
+                    <div class="flex flex-wrap -m-4 w-full">
+                        <div *ngFor="let polls of getPollsUserVar" class="flex flex-wrap xl:w-1/3 md:w-1/2 w-full p-4">
+                            <div class="border border-gray-400 p-6 rounded-lg w-full">
+                                <div
+                                    class="w-10 h-10 inline-flex items-center justify-center rounded-full  text-gray-800 mb-4">
+                                    <svg class=" fill-current h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24">
+                                        <path
+                                            d="M15.812 4.819c-.33-.341-.312-.877.028-1.207l3.469-3.365c.17-.164.387-.247.603-.247.219 0 .438.085.604.257l-4.704 4.562zm-5.705 8.572c-.07.069-.107.162-.107.255 0 .194.158.354.354.354.089 0 .178-.033.247-.1l.583-.567-.493-.509-.584.567zm4.924-6.552l-1.994 1.933c-1.072 1.039-1.619 2.046-2.124 3.451l.881.909c1.419-.461 2.442-.976 3.514-2.016l1.994-1.934-2.271-2.343zm5.816-5.958l-5.137 4.982 2.586 2.671 5.138-4.98c.377-.366.566-.851.566-1.337 0-1.624-1.968-2.486-3.153-1.336zm-11.847 12.119h-4v1h4v-1zm9-1.35v1.893c0 4.107-6 2.457-6 2.457s1.518 6-2.638 6h-7.362v-20h12.629l2.062-2h-16.691v24h10.189c3.163 0 9.811-7.223 9.811-9.614v-4.687l-2 1.951z" />
+                                    </svg>
+                                </div>
+                                <h2 class="underline text-lg  font-medium title-font mb-2">{{polls?.namePoll}}</h2>
+                                <p class="leading-relaxed text-base mb-4">{{polls?.descriptionPoll}}</p>
+                                <button class="bg-transparent hover:bg-black text-black font-semibold hover:text-white p-1 mr-1 border border-black hover:border-transparent rounded">
+                                    <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 4h-20v20h20v-20zm-24 17v-21h21v2h-19v19h-2z"/></svg>
+                                  </button>
+                                  <button class="bg-transparent hover:bg-black text-black font-semibold hover:text-white p-1 mr-1 border border-black hover:border-transparent rounded">
+                                    <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z"/></svg>
+                                  </button>
+                                  <button class="bg-transparent hover:bg-black text-black font-semibold hover:text-white p-1 mr-1 border border-black hover:border-transparent rounded">
+                                    <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18.363 8.464l1.433 1.431-12.67 12.669-7.125 1.436 1.439-7.127 12.665-12.668 1.431 1.431-12.255 12.224-.726 3.584 3.584-.723 12.224-12.257zm-.056-8.464l-2.815 2.817 5.691 5.692 2.817-2.821-5.693-5.688zm-12.318 18.718l11.313-11.316-.705-.707-11.313 11.314.705.709z"/></svg>
+                                  </button>
+                                  <button class="bg-transparent hover:bg-black text-black font-semibold hover:text-white p-1 border border-black hover:border-transparent rounded">
+                                    <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 16.538l-4.592-4.548 4.546-4.587-1.416-1.403-4.545 4.589-4.588-4.543-1.405 1.405 4.593 4.552-4.547 4.592 1.405 1.405 4.555-4.596 4.591 4.55 1.403-1.416z"/></svg>
+                                  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
     </div>
+
+    <!--Modal Crear Encuesta-->
+    <div data-theme="light" class="modal-container">
+        <input type="checkbox" id="search-modal" [checked]="showCreatePoll" class="modal-toggle">
+        <div class="modal bg-opacity-50 bg-blacks overflow-auto">
+            <div class="modal-box p-0 py-5 text-left">
+
+                <div class="w-full bg-grey-500">
+                    <div class="container mx-auto">
+                        <div class="w-11/12  mx-auto bg-white rounded border border-gray-500">
+
+                            <div class="mx-16 py-4 px-8 text-center text-black text-xl font-bold border-b border-grey-500">
+                                Agregar Encuesta
+                            </div>
+
+                            <form [formGroup]="firstForm">
+                                <div class="py-4 px-8">
+
+                                    <div class="mb-4">
+                                        <label class="block text-black text-sm font-bold mb-2">Nombre de la
+                                            Encuesta:</label>
+                                        <input formControlName="namePoll" required class=" border rounded w-full py-2 px-3 text-black" type="text"
+                                        placeholder="Nombre">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="block text-black text-sm font-bold mb-2">Descripción de la
+                                            Encuesta:</label>
+
+                                        <textarea formControlName="descriptionPoll" placeholder="Descripción"
+                                            class="border rounded w-full py-2 px-3 text-black"></textarea>
+
+                                    </div>
+                                    <!--formulario dinamico-->
+                                    <button class="btn btn-wide btn-xs mb-3 mx-auto flex items-center" (click)="addInput()">
+                                        <p> Añadir</p>
+                                    </button>
+                                    <form class="overflow-scroll h-72" [formGroup]="fields" >
+                                        <div formArrayName="fields" *ngFor="let item of getInputs()?.controls; let i = index" >
+                                            <div class="rounded border border-gray-500 bg-gray-200 mb-4" [formGroupName]="i">
+                                                <div class="md:flex p-3">
+                                                    <div class="md:w-1/2 items-center">
+                                                        <div class="mb-4">
+                                                            <label class="block text-black text-sm font-bold mb-2">Nombre del campo:</label>
+                                                            <input formControlName="nameField" required class=" border rounded w-full py-2 px-3 text-black" type="text"
+                                                            placeholder="Nombre">
+                    
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <label class="block text-black text-sm font-bold mb-2">Titulo del campo:</label>
+                                                            <input formControlName="titleField" required class=" border rounded w-full py-2 px-3 text-black" type="text"
+                                                            placeholder="Titulo">
+                    
+                                                        </div>
+                                                    </div>
+                                                    <div class="md:w-1/2 items-center">
+                                                        <div class="mb-4">
+                                                            <label class="block text-black text-sm font-bold mb-2">Es Requerido:</label>
+                                                            <select formControlName="required"
+                                                                class=" border rounded w-full py-2 px-3 text-black">
+                                                                <option value="">true/false</option>
+                                                                <option>true</option>
+                                                                <option>false</option>
+                                                            </select>
+                                                            <p id=error_creater_id></p>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <label class="block text-black text-sm font-bold mb-2">Tipo de Campo:</label>
+                                                            <select formControlName="typeField"
+                                                                class=" border rounded w-full py-2 px-3 text-black">
+                                                                <option value="">Tipo de Dato</option>
+                                                                <option>Texto</option>
+                                                                <option>Numero</option>
+                                                                <option>Fecha</option>
+                                                            </select>
+                                                            <p id=error_creater_id></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button (click)="deleteInput(i)" class="inline-flex items-center justify-center rounded-full  text-gray-800 m-4">
+                                                    <svg class=" fill-current h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg>
+                                                </button>
+                                            </div>
+                                            
+                                        </div>
+                                    </form>
+
+                                </div>
+
+                                <div class="modal-action  rounded-b-2xl px-5 mt-2 pb-5">
+
+                                    <label (click)="resetForms(); showCreatePoll = false" for="search-modal"
+                                        class="btn-modal-close btn btn-sm bg-white hover:bg-grey-300 hover:text-white text-black !font-medium">Cerrar</label>
+                                    <button for="search-modal" type="submit" (click)="addField()"
+                                        class="btn-modal-close btn btn-sm bg-green-400 hover:bg-green-700 !font-medium">Agregar</button>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!--Modal copiarlink-->
+    <div data-theme="light" class="modal-container">
+        <input type="checkbox" id="search-modal" [checked]="showLink" class="modal-toggle">
+        <div class="modal bg-opacity-50 bg-blacks overflow-auto">
+            <div class="modal-box p-0 py-5 text-left">
+
+                <div class="w-full bg-grey-500">
+                    <div class="container mx-auto">
+                        <div class="w-11/12  mx-auto bg-white rounded border border-gray-500">
+
+                            <form >
+                                <img src="../../../assets/logo.png" class="m-2" alt="">
+                                <div class="text-center">
+                                    <input class="border rounded w-11/12 py-2 px-3 text-black my-4" type="text" [value]="link" #formInputText>
+                                    <button class="btn btn-wide btn-sm" [ngxClipboard]="formInputText">Copy Link</button>
+                                </div>
+                                
+                                <div class="modal-action  rounded-b-2xl px-5 mt-2 pb-5">
+
+                                    <label (click)="showLink = false" for="search-modal"
+                                        class="btn-modal-close btn btn-sm bg-white hover:bg-grey-300 hover:text-white text-black !font-medium">Cerrar</label>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
 </div>
