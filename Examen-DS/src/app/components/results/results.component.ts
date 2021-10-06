@@ -37,7 +37,6 @@ export class ResultsComponent implements OnInit {
     this.resultService.getResultsPoll(id, this.token).subscribe(
       response=>{
         this.getResultsPollIdVar = response;
-        console.log(this.getResultsPollIdVar);
       }
     )
   }
@@ -46,7 +45,6 @@ export class ResultsComponent implements OnInit {
     this.pollService.getPollId(id).subscribe(
       response =>{
         this.getPollIdVar = response;
-        console.log(this.getPollIdVar);
       }
     )
   }
