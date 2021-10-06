@@ -24,7 +24,7 @@ export class HomePageComponent implements OnInit {
   public token: any = "";
   public getPollsUserVar: any;
   public getPollIdVar: any;
-  public link = "";
+  public link = ``;
 
 
   constructor(private userService: UserService, private router: Router, private pollService: PollService, private fmBuilder: FormBuilder) {
