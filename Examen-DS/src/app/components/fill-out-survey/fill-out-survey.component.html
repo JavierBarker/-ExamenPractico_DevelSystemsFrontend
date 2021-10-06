@@ -1,1 +1,33 @@
-<p>fill-out-survey works!</p>
+<div class="mx-auto h-full w-7/12 bg-white px-10 py-5">
+    <img src="../../../assets/logo.png" class="mx-auto" alt="">
+    <form [formGroup]="fields">
+        <h1 class=" underline block w-full text-center text-black text-2xl font-medium my-6">{{getPollIdVar?.namePoll}}</h1>
+        <h2 class="text-lg text-black font-medium title-font mb-2">{{getPollIdVar?.descriptionPoll}}</h2>
+        <div class="bg-gray-300 border border-black rounded p-7">
+            <div formArrayName="fields" *ngFor="let item of getInputs()?.controls; let i = index">
+                <div [formGroupName]="i">
+                    <div *ngIf="item?.value?.typeField === 'Texto'" class="flex flex-col mb-4">
+                        <label class=" font-medium text-lg text-gray-900">{{item?.value?.titleField}}</label>
+                        <p *ngIf="item?.value?.required === true" class="mb-2 text-red-500 italic text-sm"> Este campo es requerido</p>
+                        <input formControlName="responseText" class="border py-2 px-3 text-black" type="text" [placeholder]="item?.value?.nameField">
+                    </div>
+                    <div *ngIf="item?.value?.typeField === 'Numero'" class="flex flex-col mb-4">
+                        <label class=" font-medium text-lg text-gray-900">{{item?.value?.titleField}}</label>
+                        <p *ngIf="item?.value?.required === true" class="mb-2 text-red-500 italic text-sm"> Este campo es requerido</p>
+                        <input formControlName="responseNumber" class="border py-2 px-3 text-black" type="number" [placeholder]="item?.value?.nameField">
+                    </div>
+                    <div *ngIf="item?.value?.typeField === 'Fecha'" class="flex flex-col mb-4">
+                        <label class=" font-medium text-lg text-gray-900">{{item?.value?.titleField}}</label>
+                        <p *ngIf="item?.value?.required === true" class="mb-2 text-red-500 italic text-sm"> Este campo es requerido</p>
+                        <input formControlName="responseDate" class="border py-2 px-3 text-black" type="date" [placeholder]="item?.value?.nameField">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-6">
+                <button (click)="verification()" class="btn btn-wide text-center" type="submit">Save</button>
+            </div>
+        </div>
+        
+    </form>
+</div>

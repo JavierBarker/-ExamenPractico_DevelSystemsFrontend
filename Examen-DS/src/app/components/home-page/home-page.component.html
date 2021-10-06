@@ -23,7 +23,6 @@
                     </li>
                 </ul>
             </div>
-
         </div>
     </div>
 
@@ -116,7 +115,7 @@
                                             d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
                                     </svg>
                                 </button>
-                                <button (click)="showEditPoll = true; addEditsInputs(polls?._id)"
+                                <button (click)="showEditPoll = true; serchPollAndAddInputs(polls?._id)"
                                     class="bg-transparent hover:bg-black text-black font-semibold hover:text-white p-1 mr-1 border border-black hover:border-transparent rounded">
                                     <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24">
@@ -323,15 +322,13 @@
                                 <div class="mb-4">
                                     <label class="block text-black text-sm font-bold mb-2">Nombre de la
                                         Encuesta:</label>
-                                        <input disabled
-                                        class=" border bg-white rounded w-full py-2 px-3 text-black"
+                                    <input disabled class=" border bg-white rounded w-full py-2 px-3 text-black"
                                         type="text" [value]="getPollIdVar?.namePoll">
                                 </div>
                                 <div class="mb-4">
                                     <label class="block text-black text-sm font-bold mb-2">Descripción de la
-                                        Encuesta:  </label>
-                                    <textarea disabled
-                                        class=" border bg-white rounded w-full py-2 px-3 text-black"
+                                        Encuesta: </label>
+                                    <textarea disabled class=" border bg-white rounded w-full py-2 px-3 text-black"
                                         type="text" [value]="getPollIdVar?.descriptionPoll"></textarea>
                                 </div>
                                 <div class="overflow-scroll h-72">
@@ -342,14 +339,14 @@
                                                     <div class="mb-4">
                                                         <label class="block text-black text-sm font-bold mb-2">Nombre
                                                             del campo:</label>
-                                                            <input disabled
+                                                        <input disabled
                                                             class=" border  bg-white rounded w-full py-2 px-3 text-black"
                                                             type="text" [value]="item?.nameField">
                                                     </div>
                                                     <div class="mb-4">
                                                         <label class="block text-black text-sm font-bold mb-2">Titulo
                                                             del campo: </label>
-                                                            <input disabled
+                                                        <input disabled
                                                             class=" border  bg-white rounded w-full py-2 px-3 text-black"
                                                             type="text" [value]="item?.titleField">
                                                     </div>
@@ -358,9 +355,9 @@
                                                     <div class="mb-4">
                                                         <label class="block text-black text-sm font-bold mb-2">Es
                                                             Requerido:</label>
-                                                            <input disabled
-                                                                class=" border bg-white rounded w-full py-2 px-3 text-black"
-                                                                type="text" [value]="item?.required">
+                                                        <input disabled
+                                                            class=" border bg-white rounded w-full py-2 px-3 text-black"
+                                                            type="text" [value]="item?.required">
                                                     </div>
                                                     <div class="mb-4">
                                                         <label class="block text-black text-sm font-bold mb-2">Tipo
@@ -382,6 +379,8 @@
 
                                 <label (click)=" showViewPoll = false" for="search-modal"
                                     class="btn-modal-close btn btn-sm bg-white hover:bg-grey-300 hover:text-white text-black !font-medium">Cerrar</label>
+                                <button for="search-modal" type="submit" [routerLink]="['/results', getPollIdVar?._id]"
+                                    class="btn-modal-close btn btn-sm bg-gray-400 hover:bg-gray-700 !font-medium">Ver Resultados</button>
 
                             </div>
 
@@ -429,6 +428,10 @@
 
                                     </div>
                                     <!--formulario dinamico-->
+                                    <button class="btn btn-wide btn-xs mb-3 mx-auto flex items-center"
+                                        (click)="addInputEdit()">
+                                        <p> Añadir</p>
+                                    </button>
                                     <form class="overflow-scroll h-72" [formGroup]="editFields">
                                         <div formArrayName="fields"
                                             *ngFor="let item of getEditInputs()?.controls; let i = index">

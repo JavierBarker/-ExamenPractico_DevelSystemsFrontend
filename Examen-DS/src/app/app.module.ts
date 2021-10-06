@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ResultsComponent } from './components/results/results.component';
 import { FillOutSurveyComponent } from './components/fill-out-survey/fill-out-survey.component';
 import { ClipboardModule } from 'ngx-clipboard';
+import { PageOfThanksComponent } from './components/page-of-thanks/page-of-thanks.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ClipboardModule } from 'ngx-clipboard';
     LoginComponent,
     HomePageComponent,
     ResultsComponent,
-    FillOutSurveyComponent
+    FillOutSurveyComponent,
+    PageOfThanksComponent
   ],
   imports: [
     BrowserModule,

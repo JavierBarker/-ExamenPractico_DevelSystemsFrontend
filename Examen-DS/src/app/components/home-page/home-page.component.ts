@@ -137,7 +137,7 @@ export class HomePageComponent implements OnInit {
   }
 /////////////////////////////////////////////////////////////
 //////EDITAR ENCUESTA////////////////////////////////////////
-editFirstForm: FormGroup = this.fmBuilder.group({
+editFirstForm: FormGroup = this.fmBuilder.group({//Puedo no repetir codigo
   namePoll: ['',Validators.required],
   descriptionPoll: ['', Validators.required]
 })
@@ -154,7 +154,15 @@ editInput(){
   })
 }
 
-addEditsInputs(id: string){
+addInputEdit(){
+  const formArray = this.editFields.get('fields') as FormArray;
+  if (formArray.controls.length === 0) return formArray.push(this.editInput());
+  const lastFormGroup = formArray.controls[formArray.controls.length - 1] as FormGroup;
+  if (lastFormGroup.valid) formArray.push(this.editInput());
+  else this.editFields.markAllAsTouched();
+}
+
+serchPollAndAddInputs(id: string){
   this.pollService.getPollId(id).subscribe(
     response =>{
       this.getPollIdVar = response;
