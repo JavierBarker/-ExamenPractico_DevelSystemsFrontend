@@ -116,7 +116,7 @@
                                             d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
                                     </svg>
                                 </button>
-                                <button
+                                <button (click)="showEditPoll = true; addEditsInputs(polls?._id)"
                                     class="bg-transparent hover:bg-black text-black font-semibold hover:text-white p-1 mr-1 border border-black hover:border-transparent rounded">
                                     <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24">
@@ -334,7 +334,7 @@
                                         class=" border bg-white rounded w-full py-2 px-3 text-black"
                                         type="text" [value]="getPollIdVar?.descriptionPoll"></textarea>
                                 </div>
-                                <form class="overflow-scroll h-72">
+                                <div class="overflow-scroll h-72">
                                     <div *ngFor="let item of getPollIdVar?.fields">
                                         <div class="rounded border border-gray-500 bg-gray-200 mb-4">
                                             <div class="md:flex p-3">
@@ -374,7 +374,7 @@
                                         </div>
 
                                     </div>
-                                </form>
+                                </div>
 
                             </div>
 
@@ -392,6 +392,131 @@
             </div>
         </div>
     </div>
+
+
+    <!--Modal Editar Encuesta-->
+    <div data-theme="light" class="modal-container">
+        <input type="checkbox" id="search-modal" [checked]="showEditPoll" class="modal-toggle">
+        <div class="modal bg-opacity-50 bg-blacks overflow-auto">
+            <div class="modal-box p-0 py-5 text-left">
+
+                <div class="w-full bg-grey-500">
+                    <div class="container mx-auto">
+                        <div class="w-11/12  mx-auto bg-white rounded border border-gray-500">
+
+                            <div
+                                class="mx-16 py-4 px-8 text-center text-black text-xl font-bold border-b border-grey-500">
+                                Editar Encuesta
+                            </div>
+
+                            <form [formGroup]="editFirstForm">
+                                <div class="py-4 px-8">
+
+                                    <div class="mb-4">
+                                        <label class="block text-black text-sm font-bold mb-2">Nombre de la
+                                            Encuesta:</label>
+                                        <input formControlName="namePoll" required
+                                            class=" border rounded w-full py-2 px-3 text-black" type="text"
+                                            placeholder="Nombre">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="block text-black text-sm font-bold mb-2">Descripción de la
+                                            Encuesta:</label>
+
+                                        <textarea formControlName="descriptionPoll" placeholder="Descripción"
+                                            class="border rounded w-full py-2 px-3 text-black"></textarea>
+
+                                    </div>
+                                    <!--formulario dinamico-->
+                                    <form class="overflow-scroll h-72" [formGroup]="editFields">
+                                        <div formArrayName="fields"
+                                            *ngFor="let item of getEditInputs()?.controls; let i = index">
+                                            <div class="rounded border border-gray-500 bg-gray-200 mb-4"
+                                                [formGroupName]="i">
+                                                <div class="md:flex p-3">
+                                                    <div class="md:w-1/2 items-center">
+                                                        <div class="mb-4">
+                                                            <label
+                                                                class="block text-black text-sm font-bold mb-2">Nombre
+                                                                del campo:</label>
+                                                            <input formControlName="nameField" required
+                                                                class=" border rounded w-full py-2 px-3 text-black"
+                                                                type="text" placeholder="Nombre">
+
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <label
+                                                                class="block text-black text-sm font-bold mb-2">Titulo
+                                                                del campo:</label>
+                                                            <input formControlName="titleField" required
+                                                                class=" border rounded w-full py-2 px-3 text-black"
+                                                                type="text" placeholder="Titulo">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="md:w-1/2 items-center">
+                                                        <div class="mb-4">
+                                                            <label class="block text-black text-sm font-bold mb-2">Es
+                                                                Requerido:</label>
+                                                            <select formControlName="required"
+                                                                class=" border rounded w-full py-2 px-3 text-black">
+                                                                <option value="">true/false</option>
+                                                                <option>true</option>
+                                                                <option>false</option>
+                                                            </select>
+                                                            <p id=error_creater_id></p>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <label class="block text-black text-sm font-bold mb-2">Tipo
+                                                                de Campo:</label>
+                                                            <select formControlName="typeField"
+                                                                class=" border rounded w-full py-2 px-3 text-black">
+                                                                <option value="">Tipo de Dato</option>
+                                                                <option>Texto</option>
+                                                                <option>Numero</option>
+                                                                <option>Fecha</option>
+                                                            </select>
+                                                            <p id=error_creater_id></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button (click)="deleteInput(i)"
+                                                    class="inline-flex items-center justify-center rounded-full  text-gray-800 m-4">
+                                                    <svg class=" fill-current h-6 w-6"
+                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24">
+                                                        <path
+                                                            d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </form>
+
+                                </div>
+
+                                <div class="modal-action  rounded-b-2xl px-5 mt-2 pb-5">
+
+                                    <label (click)="resetFormsEdit(); showEditPoll = false" for="search-modal"
+                                        class="btn-modal-close btn btn-sm bg-white hover:bg-grey-300 hover:text-white text-black !font-medium">Cerrar</label>
+                                    <button for="search-modal" type="submit" (click)="editPoll(getPollIdVar?._id)"
+                                        class="btn-modal-close btn btn-sm bg-gray-400 hover:bg-gray-700 !font-medium">Editar</button>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
 
     <!--Modal Eliminar Encuesta-->
     <div data-theme="light" class="modal-container">

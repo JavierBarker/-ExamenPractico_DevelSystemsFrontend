@@ -29,6 +29,10 @@ export class PollService {
     return this.http.get(`${this.url}/getPollById/${id}`, {headers: this.headersVar});
   }
 
+  editPollId(id: string, token: any, poll: {}):Observable<any>{
+    let headersToken = this.headersVar.set('Authorization', token);
+    return this.http.put(`${this.url}/editPollById/${id}`, poll, {headers: headersToken});
+  }
 
   deletePollId(id: string, token: any):Observable<any>{
     let headersToken = this.headersVar.set('Authorization', token);

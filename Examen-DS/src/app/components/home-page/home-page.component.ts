@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import { PollService } from 'src/app/services/poll.service';
 import { Form, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-home-page',
@@ -18,6 +19,7 @@ export class HomePageComponent implements OnInit {
   showCreatePoll: boolean = false;
   showLink: boolean = false;
   showViewPoll: boolean = false;
+  showEditPoll: boolean = false;
   showDeletePoll: boolean = false;
   public token: any = "";
   public getPollsUserVar: any;
@@ -134,7 +136,80 @@ export class HomePageComponent implements OnInit {
     )
   }
 /////////////////////////////////////////////////////////////
+//////EDITAR ENCUESTA////////////////////////////////////////
+editFirstForm: FormGroup = this.fmBuilder.group({
+  namePoll: ['',Validators.required],
+  descriptionPoll: ['', Validators.required]
+})
+editFields: FormGroup = this.fmBuilder.group({
+  fields: this.fmBuilder.array([], Validators.required)
+})
+
+editInput(){
+  return this.fmBuilder.group({
+    nameField: ['', Validators.required],
+    titleField: ['', Validators.required],
+    required: [Boolean, Validators.required],
+    typeField: ['', Validators.required]
+  })
+}
+
+addEditsInputs(id: string){
+  this.pollService.getPollId(id).subscribe(
+    response =>{
+      this.getPollIdVar = response;
+      this.editFirstForm.setValue({
+        namePoll: response.namePoll,
+        descriptionPoll: response.descriptionPoll
+      })
+      const fields = response.fields;
+      const formArray = this.editFields.get('fields') as FormArray;
+      for (let i = 0; i < fields.length; i++) {
+        formArray.push(this.editInput());
+      }
+
+      for (let i = 0; i < fields.length; i++) {
+        const formGroup = formArray.controls[i] as FormGroup;
+        formGroup.setValue({
+          nameField: fields[i].nameField,
+          titleField: fields[i].titleField,
+          required: fields[i].required,
+          typeField: fields[i].typeField
+        })
+        
+      }
+
+      
+
+    }
+  )
   
+}
+
+editPoll(id: string){
+  const field = { ...this.editFirstForm.value, ...this.editFields.value};
+  this.pollService.editPollId(id, this.token, field).subscribe(
+    response =>{
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Encuesta Editada',
+        showConfirmButton: false,
+        timer: 1500
+      })
+
+      this.resetFormsEdit();
+      this.showEditPoll = false;
+      this.getPollsUser(); 
+    }
+  )
+}
+
+getEditInputs() {
+  return this.editFields.get('fields') as FormArray;
+}
+
+/////////////////////////////////////////////////////////////
 
   copyLink(){
     Swal.fire({
@@ -149,6 +224,15 @@ export class HomePageComponent implements OnInit {
     this.firstForm.reset();
     this.fields.reset();
     const formArray = this.fields.get('fields') as FormArray;
+    while (formArray.length !== 0) {
+      formArray.removeAt(0)
+    }
+  }
+
+  resetFormsEdit(){
+    this.editFirstForm.reset();
+    this.editFields.reset();
+    const formArray = this.editFields.get('fields') as FormArray;
     while (formArray.length !== 0) {
       formArray.removeAt(0)
     }
