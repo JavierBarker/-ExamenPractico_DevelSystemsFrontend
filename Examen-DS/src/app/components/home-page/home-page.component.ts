@@ -88,7 +88,7 @@ export class HomePageComponent implements OnInit {
     const field = { ...this.firstForm.value, ...this.fields.value};
     this.pollService.addPoll(field, this.token).subscribe(
       response =>{
-        this.link = `http://localhost:4200/poll/${response.addPoll._id}`
+        this.link = `https://examen-devel-systems.web.app/poll/${response.addPoll._id}`
         this.showLink = true;
 
         this.resetForms();
